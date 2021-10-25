@@ -50,7 +50,7 @@ sampling rates : 10%(light orange), 20%(dark blue), 30%(dark orange), 40%(light 
 
 ### Test results
 
-mean PSNR on validation dataset with radial mask of different sampling rates, batch_size is set as 16;
+mean PSNR on validation dataset with radial mask of different sampling rates, batch_size is set as 4;
 
 model  |  10%  | 20%  | 30% | 40% 
 -------|-------|------|-----|------
