@@ -2,13 +2,16 @@
 unofficial pytorch implementation of RefineGAN (https://arxiv.org/abs/1709.00753) for CSMRI reconstruction, the official code using tensorpack can be found at https://github.com/tmquan/RefineGAN
 
 ### To Do
-- [ ] run the original tensorpack code (soryy, can't run tensorpack on my GPU)
+- [ ] run the original tensorpack code (sorry, can't run tensorpack on my GPU)
 - [x] pytorch implementation and experiments on brain images with radial mask
 - [ ] the mean psnr of zero-filled image is not exactly the same as the value in original paper, although the model improvement is similar
 - [ ] experiments on different masks
 
-### Requirements
+### Install
+python>=3.7.11 is required with all requirements.txt installed including pytorch>=1.10.0
 ```shell
+git clone https://github.com/hellopipu/RefineGAN.git
+cd RefineGAN
 pip install -r requirements.txt
 ```
 ### How to use

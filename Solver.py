@@ -62,7 +62,7 @@ class Solver():
         ############################################ start to run epochs ############################################
 
         start_epoch = 0
-        num_epoch = 500
+        num_epoch = self.args.num_epoch
         weight_cliping_limit = 0.01
         D.train()
         best_val_psnr = 0
@@ -151,6 +151,12 @@ class Solver():
 
             base_psnr /= len(dataset_val)
             test_psnr /= len(dataset_val)
+            ## save the best model according to validation psnr
+            if best_val_psnr < test_psnr:
+                best_val_psnr = test_psnr
+                best_name = data_name + '_' + mask_name + '_' + str(sampling_rate) + '_' + 'best.pth'
+                state = {'net': G.state_dict(), 'net_D': D.state_dict(), 'start_epoch': epoch, 'psnr': test_psnr}
+                torch.save(state, join(saveDir, best_name))
             ########################## 3. print and tensorboard ########################
             print("Epoch {}/{}".format(epoch + 1, num_epoch))
             print(" base PSNR:\t\t{:.6f}".format(base_psnr))
@@ -174,12 +180,7 @@ class Solver():
             writer.add_scalar("loss/D_loss_Ab", d_loss_list[3], epoch)
             writer.add_scalar("loss/base_psnr", base_psnr, epoch)
             writer.add_scalar("loss/test_psnr", test_psnr, epoch)
-            ## save the best model according to validation psnr
-            if best_val_psnr < test_psnr:
-                best_val_psnr = test_psnr
-                best_name = data_name + '_' + mask_name + '_' + str(sampling_rate) + '_' + 'best.pth'
-                state = {'net': G.state_dict(), 'net_D': D.state_dict(), 'start_epoch': epoch, 'psnr': test_psnr}
-                torch.save(state, join(saveDir, best_name))
+
         writer.close()
 
     def test(self):

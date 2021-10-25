@@ -21,6 +21,8 @@ if __name__ == '__main__':
                         help='sampling rate for mask, only 10, 20,30,40, ...')
     parser.add_argument('--batch_size', type=int, default=4,
                         help='batch size, 4,8,16, ...')
+    parser.add_argument('--num_epoch', type=int, default=500,
+                        help='num of training epoch')
     parser.add_argument('--train_path', default='data/brain/db_train/',
                         help='train_path')
     parser.add_argument('--val_path', default='data/brain/db_valid/',

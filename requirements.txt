@@ -1,8 +1,6 @@
-python==3.7.11
-argparse==1.1
-numpy==1.20.3
-skimage==0.18.3
-pytorch==1.10.0
-torchvision==0.11.1
-tensorboardx==2.6.0
+numpy>=1.20.3
+scikit-image>=0.18.3
+torch>=1.10.0
+torchvision>=0.11.1
+tensorboard>=2.6.0
 
