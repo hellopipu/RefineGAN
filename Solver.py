@@ -17,6 +17,7 @@ from utils import cal_psnr, output2complex
 from os.path import join
 import skimage.io
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 class Solver():
@@ -278,6 +279,9 @@ class Solver():
                 err_T1 = abs(T1 - im_A)
 
                 np_visual_stack = np.hstack((mask.astype(np.uint8), im_A_und.astype(np.uint8), T1.astype(np.uint8),
-                                             im_A.astype(np.uint8), error_und.astype(np.uint8),
-                                             err_T1.astype(np.uint8)))
-                skimage.io.imsave('{}_{}.png'.format(self.mask_name, sampling_rate), np_visual_stack)
+                                             im_A.astype(np.uint8)))
+                np_visual_stack_error = np.hstack((error_und.astype(np.uint8), err_T1.astype(np.uint8)))
+
+                plt.imsave('{}_{}_error.png'.format(self.mask_name, sampling_rate), np_visual_stack_error)
+                plt.imsave('{}_{}.png'.format(self.mask_name, sampling_rate), np_visual_stack, cmap='gray')
+                # skimage.io.imsave('{}_{}.png'.format(self.mask_name, sampling_rate), np_visual_stack)
