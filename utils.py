@@ -53,3 +53,15 @@ def revert_scale(im_tensor, a=2., b=-1.):
     im = (im_tensor - b) / a
 
     return im
+
+def output2complex(im_tensor):
+    '''
+    param: im_tensor : [B, 2, W, H]
+    return : [B,W,H] complex value
+    '''
+    ############## revert each channel to [0,1.] range
+    im_tensor = revert_scale(im_tensor)
+    # 2 channel to complex
+    im_tensor = torch.view_as_complex(im_tensor.permute(0, 2, 3, 1).contiguous())
+    
+    return im_tensor

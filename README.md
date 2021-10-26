@@ -15,26 +15,38 @@ cd RefineGAN
 pip install -r requirements.txt
 ```
 ### How to use
-for training:
+#### **for training:**
 ```shell
 cd run_sh
 sh train.sh
 ```
-the model will be saved in folder `weight`, tensorboard information will be saved in folder `log`.
-
-for testing:
-```shell
-cd run_sh
-sh test.sh
-```
-you can change the arguments in script such as `--mask_type` and `--sampling_rate` for different experiment settings.
+the model will be saved in folder `weight`, tensorboard information will be saved in folder `log`. You can change the arguments in script such as `--mask_type` and `--sampling_rate` for different experiment settings.
 
 
-for tensorboard:
+#### **for tensorboard:**
+
+check the training curves while training
 ```shell
 tensorboard --logdir log
 ```
 the training info of my experiments is already in `log` folder
+
+#### **for testing:**
+
+test after training, or you can download my trained model weights from [google drive](https://drive.google.com/drive/folders/1ZSA_rOy9OCRfRjpX35gOPK8WiDCRFAn8?usp=sharing).
+
+```shell
+cd run_sh
+sh test.sh
+```
+
+#### **for visualization:**
+```shell
+cd run_sh
+sh visualize.sh
+```
+
+
 
 ### training curves
 sampling rates : 10%(light orange), 20%(dark blue), 30%(dark orange), 40%(light blue). You can check more loss curves of my experiments using tensorboard.
@@ -49,7 +61,6 @@ PSNR on training set over 500 epochs, compared with results shown in original pa
 |------------|-------------|
 |<img src="img/my_train_psnr.svg?raw=true" title = "my_train_psnr" width="400">|<img src="img/paper_train_psnr.png?raw=true" title="paper_train_psnr" width="400">|
 
-
 ### Test results
 
 mean PSNR on validation dataset with radial mask of different sampling rates, batch_size is set as 4;
@@ -59,6 +70,13 @@ model  |  10%  | 20%  | 30% | 40%
 zero-filled| 22.296 | 25.806 | 28.997| 31.699 
 RefineGAN|  32.705 |  36.734 | 39.961| 42.903
 
+### Test cases visualization
+| sampling rate    | mask -- zero-filled -- prediction -- ground truth -- error (zero-filled) -- error (prediction)    
+-------|------
+10%|<img src="img/radial_10.png?raw=true" title = "radial_10" width="400">
+20%|<img src="img/radial_20.png?raw=true" title = "radial_20" width="400">
+30%|<img src="img/radial_30.png?raw=true" title = "radial_30" width="400">
+40%|<img src="img/radial_40.png?raw=true" title = "radial_40" width="400">
 ### Notes on RefineGAN
 
 - data processing before training : complex value represents in 2-channel , each channel rescale to [-1,1]; accordingly the last layer of generator is tanh()

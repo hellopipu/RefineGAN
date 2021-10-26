@@ -12,13 +12,15 @@ def main(args):
     solver = Solver(args)
     if args.mode == 'train':
         solver.train()
-    else:
+    elif args.mode == 'test':
         solver.test()
+    else:
+        solver.visualize()
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--mode', default='train', choices=['train', 'test'],
+    parser.add_argument('--mode', default='train', choices=['train', 'test','visualize'],
                         help='mode for the program')
     parser.add_argument('--mask_type', default='radial', choices=['radial', 'cartes', 'gauss', 'spiral'],
                         help='mask type')
