@@ -4,7 +4,7 @@ unofficial pytorch implementation of RefineGAN (https://arxiv.org/abs/1709.00753
 ### To Do
 - [ ] run the original tensorpack code (sorry, can't run tensorpack on my GPU)
 - [x] pytorch implementation and experiments on brain images with radial mask
-- [ ] the mean psnr of zero-filled image is not exactly the same as the value in original paper, although the model improvement is similar
+- [x] bug fixed. ~~the mean psnr of zero-filled image is not exactly the same as the value in original paper, although the model improvement is similar~~
 - [ ] experiments on different masks
 
 ### Install
@@ -39,13 +39,15 @@ the training info of my experiments is already in `log` folder
 ### training curves
 sampling rates : 10%(light orange), 20%(dark blue), 30%(dark orange), 40%(light blue). You can check more loss curves of my experiments using tensorboard.
 
-| G_loss_total    | D_loss_total     |
+| loss_G_loss_total    | loss_recon_img_Aa     |
 |------------|-------------|
-|<img src="img/loss_G_loss_total.svg?raw=true" title = "G_loss_total" width="400">|<img src="img/loss_D_loss_total.svg?raw=true" title="D_loss_total" width="400">|
+|<img src="img/loss_G_loss_total.svg?raw=true" title = "G_loss_total" width="400">|<img src="img/loss_recon_img_Aa.svg?raw=true" title="loss_recon_img_Aa" width="400">|
 
-| loss_recon_img_Aa    | test_psnr    |
+PSNR on training set over 500 epochs, compared with results shown in original paper. 
+
+| my_train_psnr    | paper_train_psnr    |
 |------------|-------------|
-|<img src="img/loss_recon_img_Aa.svg?raw=true" title = "loss_recon_img_Aa" width="400">|<img src="img/test_psnr.svg?raw=true" title="test_psnr" width="400">|
+|<img src="img/my_train_psnr.svg?raw=true" title = "my_train_psnr" width="400">|<img src="img/paper_train_psnr.png?raw=true" title="paper_train_psnr" width="400">|
 
 
 ### Test results
@@ -54,12 +56,12 @@ mean PSNR on validation dataset with radial mask of different sampling rates, ba
 
 model  |  10%  | 20%  | 30% | 40% 
 -------|-------|------|-----|------
-zero-filled| 27.746 | 31.426 | 34.805| 37.615 
-RefineGAN|  36.165 |  40.196 | 43.463| 46.499
+zero-filled| 22.296 | 25.806 | 28.997| 31.699 
+RefineGAN|  32.705 |  36.734 | 39.961| 42.903
 
 ### Notes on RefineGAN
 
-- data processing before training : data rescale to [-1,1]
+- data processing before training : complex value represents in 2-channel , each channel rescale to [-1,1]; accordingly the last layer of generator is tanh()
 - Generator uses residual learning for reconstruction task
 - Generator is a cascade of two U-net, the U-net doesn't do concatenation but addition when combining the enc and dec features. 
 - each U-net is followed by a Data-consistency (DC) module, although the paper doesn't mention it.

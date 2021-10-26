@@ -1,6 +1,7 @@
 import torch
 from utils import RF
 
+
 def total_variant(images):
     '''
     :param images:  [B,C,W,H]
