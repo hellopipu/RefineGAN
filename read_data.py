@@ -1,3 +1,8 @@
+# @project      : Pytorch implementation of RefineGAN
+# @author       : Bingyu Xin   
+# @Institute    : CS@Rutgers
+# @Code         : https://github.com/hellopipu/RefineGAN
+
 from os.path import join as join
 import glob
 import random

@@ -1,3 +1,8 @@
+# @project      : Pytorch implementation of RefineGAN
+# @author       : Bingyu Xin   
+# @Institute    : CS@Rutgers
+# @Code         : https://github.com/hellopipu/RefineGAN
+
 from torch.fft import fft2, ifft2
 import torch
 import math

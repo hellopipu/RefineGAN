@@ -1,3 +1,8 @@
+# @project      : Pytorch implementation of RefineGAN
+# @author       : Bingyu Xin   
+# @Institute    : CS@Rutgers
+# @Code         : https://github.com/hellopipu/RefineGAN
+
 import os
 import torch
 import torch.optim as optim
