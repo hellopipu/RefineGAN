@@ -71,12 +71,13 @@ zero-filled| 22.296 | 25.806 | 28.997| 31.699
 RefineGAN|  32.705 |  36.734 | 39.961| 42.903
 
 ### Test cases visualization
-| sampling rate    | mask -- zero-filled -- prediction -- ground truth -- error (zero-filled) -- error (prediction)    
+| rate    | ------ mask -------------- zero-filled ----------- prediction ---- ground truth - error (zero-filled) - error (prediction)    
 -------|------
-10%|<img src="img/radial_10.png?raw=true" title = "radial_10" width="400">
-20%|<img src="img/radial_20.png?raw=true" title = "radial_20" width="400">
-30%|<img src="img/radial_30.png?raw=true" title = "radial_30" width="400">
-40%|<img src="img/radial_40.png?raw=true" title = "radial_40" width="400">
+10%|<img src="img/radial_10.png?raw=true" title = "radial_10" width="800"> 
+20%|<img src="img/radial_20.png?raw=true" title = "radial_20" width="800"> 
+30%|<img src="img/radial_30.png?raw=true" title = "radial_30" width="800"> 
+40%|<img src="img/radial_40.png?raw=true" title = "radial_40" width="800"> 
+
 ### Notes on RefineGAN
 
 - data processing before training : complex value represents in 2-channel , each channel rescale to [-1,1]; accordingly the last layer of generator is tanh()
