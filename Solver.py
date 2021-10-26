@@ -8,7 +8,7 @@ import torch.utils.data as Data
 from tensorboardX import SummaryWriter
 from datetime import datetime
 from loss import cal_loss
-from utils import cal_psnr
+from utils import cal_psnr,revert_scale, FhRF
 from os.path import join
 
 
@@ -134,20 +134,23 @@ class Solver():
                                                     data_dict['k_A_und'].float().cuda(), \
                                                     data_dict['mask'].float().cuda()
                     Sp1, S1, Tp1, T1 = G(im_A_und, k_A_und, mask)
-                    T1 = (T1 / 2.0 + 0.5) * 255.0
-                    im_A = (im_A / 2.0 + 0.5) * 255.0
-                    im_A_und = (im_A_und / 2.0 + 0.5) * 255.0
 
-                    T1 = torch.view_as_complex(T1.permute(0, 2, 3, 1).contiguous()).cpu()
-                    im_A = torch.view_as_complex(im_A.permute(0, 2, 3, 1).contiguous()).cpu()
-                    im_A_und = torch.view_as_complex(im_A_und.permute(0, 2, 3, 1).contiguous()).cpu()
+                    # 2 channel to complex
+                    T1 = torch.view_as_complex(T1.permute(0, 2, 3, 1).contiguous())
+                    im_A = torch.view_as_complex(im_A.permute(0, 2, 3, 1).contiguous())
+                    im_A_und = torch.view_as_complex(im_A_und.permute(0, 2, 3, 1).contiguous())
 
+                    ############## revert to original img pixel range
+                    # assume preprocessing is: ax + b
+                    # then revert preprocessing is: (im - FhRF(b)) / a
+
+                    T1 = revert_scale(T1,b,a=2)
+                    im_A = revert_scale(im_A,b,a=2)
+                    im_A_und = revert_scale(im_A_und,b,a=2, undersampled=True)
                     ########################## 2.1 cal psnr for validation ###################################
-                    for im_i, und_i, pred_i in zip(im_A,
-                                                   im_A_und,
-                                                   T1):
-                        base_psnr += cal_psnr(im_i, und_i)
-                        test_psnr += cal_psnr(im_i, pred_i)
+
+                    base_psnr += cal_psnr(im_A, im_A_und, maxp=1.)
+                    test_psnr += cal_psnr(im_A, T1, maxp=1.)
 
             base_psnr /= len(dataset_val)
             test_psnr /= len(dataset_val)

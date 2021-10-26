@@ -1,7 +1,7 @@
 import numpy as np
 from numpy.fft import fft2, ifft2
 import torch
-
+import math
 
 def undersample(image, mask, norm='ortho'):
     assert image.shape == mask.shape
@@ -45,18 +45,36 @@ def to_tensor_format(x, mask=False):
     return x
 
 
-def cal_psnr(pred, gt, maxp=255):
+def cal_psnr(pred, gt, maxp=1.):
     pred = pred.abs()
-    pred = torch.clamp(pred, min=0., max=255.)  # some points in pred are larger than 255
+    pred = torch.clamp(pred, min=0., max=maxp)  # some points in pred are larger than maxp
     gt = gt.abs()
 
-    mse = torch.mean((pred - gt) ** 2)
-    if maxp is None:
-        pass
-        # psnr = tf.multiply(log10(mse), -10., name=name)
-    else:
-        maxp = torch.Tensor([maxp])
-        psnr = -10. * torch.log10(mse + 1e-6)
-        psnr = psnr + 20. * torch.log10(maxp)
+    mse = torch.mean((pred - gt) ** 2,dim=(1,2))
 
-    return psnr.numpy()[0]
+    psnr = -10. * torch.log10(mse) #+ 1e-6
+    psnr = psnr + 20. * math.log10(maxp)
+
+    return psnr.sum()
+
+def RF(x_rec, mask, norm='ortho'):
+    '''
+    RF means R*F(input), F is fft, R is applying mask;
+    return the masked k-space of x_rec,
+    '''
+    x_rec = x_rec.permute(0, 2, 3, 1)
+    mask = mask.permute(0, 2, 3, 1)
+    k_rec = torch.fft.fft2(torch.view_as_complex(x_rec.contiguous()), norm=norm)
+    k_rec = torch.view_as_real(k_rec)
+    k_rec *= mask
+    k_rec = k_rec.permute(0, 3, 1, 2)
+    return k_rec
+
+def revert_scale(im_tensor, a=2., b=-1.):
+    '''
+    param: im_tensor : [B, W, H], complex value
+    '''
+    b = b * torch.ones_like(im_tensor)
+    im = (im_tensor - b) / a
+
+    return im

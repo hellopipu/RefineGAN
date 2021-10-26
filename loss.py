@@ -1,5 +1,5 @@
 import torch
-
+from utils import RF
 
 def total_variant(images):
     '''
@@ -12,20 +12,6 @@ def total_variant(images):
     tot_var = torch.abs(pixel_dif1).sum([1, 2, 3]) + torch.abs(pixel_dif2).sum([1, 2, 3])
 
     return tot_var
-
-
-def RF(x_rec, mask, norm='ortho'):
-    '''
-    return the masked k-space of x_rec
-    '''
-    x_rec = x_rec.permute(0, 2, 3, 1)
-    mask = mask.permute(0, 2, 3, 1)
-    k_rec = torch.fft.fft2(torch.view_as_complex(x_rec.contiguous()), norm=norm)
-    k_rec = torch.view_as_real(k_rec)
-    k_rec *= mask
-    k_rec = k_rec.permute(0, 3, 1, 2)
-
-    return k_rec
 
 
 def build_loss(dis_real, dis_fake):
