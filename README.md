@@ -74,10 +74,10 @@ RefineGAN|  32.705 |  36.734 | 39.961| 42.903
 
 |  rate    | from left to right: mask, zero-filled, prediction and ground truth | error (zero-filled) and error (prediction)    
 -------|------|------
-10%|<img src="img/radial_10.png?raw=true" title = "radial_10" width="600">|<img src="img/radial_10_error.png?raw=true" title = "radial_10_error" width="400">
-20%|<img src="img/radial_20.png?raw=true" title = "radial_20" width="600">|<img src="img/radial_20_error.png?raw=true" title = "radial_20_error" width="400">
-30%|<img src="img/radial_30.png?raw=true" title = "radial_30" width="600">|<img src="img/radial_30_error.png?raw=true" title = "radial_30_error" width="400">
-40%|<img src="img/radial_40.png?raw=true" title = "radial_40" width="600">|<img src="img/radial_40_error.png?raw=true" title = "radial_40_error" width="400">
+10%|<img src="img/radial_10.png?raw=true" title = "radial_10" width="800">|<img src="img/radial_10_error.png?raw=true" title = "radial_10_error" width="400">
+20%|<img src="img/radial_20.png?raw=true" title = "radial_20" width="800">|<img src="img/radial_20_error.png?raw=true" title = "radial_20_error" width="400">
+30%|<img src="img/radial_30.png?raw=true" title = "radial_30" width="800">|<img src="img/radial_30_error.png?raw=true" title = "radial_30_error" width="400">
+40%|<img src="img/radial_40.png?raw=true" title = "radial_40" width="800">|<img src="img/radial_40_error.png?raw=true" title = "radial_40_error" width="400">
 
 
 ### Notes on RefineGAN

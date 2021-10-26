@@ -271,17 +271,17 @@ class Solver():
                 print(" test PSNR:\t\t{:.6f}".format(test_psnr))
                 ######################### visualization ###############################
 
-                mask = 255 * mask[0, 0].cpu().numpy()
-                T1 = 255 * T1.abs()[0].cpu().numpy()
-                im_A = 255 * im_A.abs()[0].cpu().numpy()
-                im_A_und = 255 * im_A_und.abs()[0].cpu().numpy()
+                mask = mask[0, 0].cpu().numpy()
+                T1 = T1.abs()[0].cpu().numpy()
+                im_A = im_A.abs()[0].cpu().numpy()
+                im_A_und = im_A_und.abs()[0].cpu().numpy()
                 error_und = abs(im_A_und - im_A)
                 err_T1 = abs(T1 - im_A)
 
-                np_visual_stack = np.hstack((mask.astype(np.uint8), im_A_und.astype(np.uint8), T1.astype(np.uint8),
-                                             im_A.astype(np.uint8)))
-                np_visual_stack_error = np.hstack((error_und.astype(np.uint8), err_T1.astype(np.uint8)))
+                np_visual_stack = np.hstack((mask, im_A_und, T1,
+                                             im_A))
+                np_visual_stack_error = np.hstack((error_und, err_T1))
 
-                plt.imsave('{}_{}_error.png'.format(self.mask_name, sampling_rate), np_visual_stack_error)
-                plt.imsave('{}_{}.png'.format(self.mask_name, sampling_rate), np_visual_stack, cmap='gray')
+                plt.imsave('{}_{}_error.png'.format(self.mask_name, sampling_rate), np_visual_stack_error,vmin=0,vmax=1.)
+                plt.imsave('{}_{}.png'.format(self.mask_name, sampling_rate), np_visual_stack, vmin=0,vmax=1., cmap='gray')
                 # skimage.io.imsave('{}_{}.png'.format(self.mask_name, sampling_rate), np_visual_stack)
